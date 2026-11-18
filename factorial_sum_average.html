@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nth Factorial, Sum and Average</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #eef2f7;
+      margin: 0;
+      padding: 40px 16px;
+      color: #1f2937;
+    }
+    .card {
+      max-width: 460px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    }
+    h1 { font-size: 22px; margin-top: 0; }
+    label { display: block; margin: 16px 0 6px; font-weight: bold; }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: 1px solid #9ca3af;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 20px;
+      background: #1d4ed8;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #1e40af; }
+    #result {
+      margin-top: 20px;
+      padding: 14px;
+      background: #f3f4f6;
+      border-radius: 6px;
+      font-size: 17px;
+      line-height: 1.7;
+      min-height: 24px;
+      word-wrap: break-word;
+    }
+    .error { color: #b91c1c; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Nth Factorial, Sum and Average</h1>
+
+    <label for="n">Enter an integer value n</label>
+    <input type="number" id="n" min="1" max="170" step="1" placeholder="e.g. 5">
+
+    <button onclick="compute()">Compute</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // 1. Nth factorial using a WHILE loop
+    // (BigInt is used so large factorials stay exact)
+    function factorialWhile(n) {
+      var result = 1n;
+      var i = 1n;
+      var big = BigInt(n);
+      while (i <= big) {
+        result = result * i;
+        i++;
+      }
+      return result;
+    }
+
+    // 2. Sum of the first n numbers using a DO WHILE loop
+    function sumDoWhile(n) {
+      var sum = 0;
+      var i = 1;
+      do {
+        sum = sum + i;
+        i++;
+      } while (i <= n);
+      return sum;
+    }
+
+    // 3. Average of the first n numbers using a FOR loop
+    function averageFor(n) {
+      var sum = 0;
+      for (var i = 1; i <= n; i++) {
+        sum = sum + i;
+      }
+      return sum / n;
+    }
+
+    // Runs when the button is clicked
+    function compute() {
+      var input = document.getElementById("n").value;
+      var resultBox = document.getElementById("result");
+
+      // Validate: must be a whole number from 1 to 170
+      var n = Number(input);
+      if (input === "" || !Number.isInteger(n) || n < 1 || n > 170) {
+        resultBox.innerHTML = "<span class='error'>Please enter a whole number from 1 to 170.</span>";
+        return;
+      }
+
+      var fact = factorialWhile(n);
+      var sum = sumDoWhile(n);
+      var avg = averageFor(n);
+
+      resultBox.innerHTML =
+        "n = " + n + "<br>" +
+        "<b>Factorial (while loop):</b> " + fact.toString() + "<br>" +
+        "<b>Sum (do while loop):</b> " + sum + "<br>" +
+        "<b>Average (for loop):</b> " + avg;
+    }
+  </script>
+
+</body>
+</html>
